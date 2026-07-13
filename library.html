@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书馆座位预约系统</title>
+    <style>
+        /* ========== 全局样式 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* ========== 头部样式 ========== */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #5b2c8b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1::before {
+            content: '📚';
+            font-size: 28px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info span {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .user-info strong {
+            color: #5b2c8b;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ee5a5a;
+        }
+
+        .btn-success {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #40c057;
+        }
+
+        /* ========== 主内容区域 ========== */
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* ========== 认证表单样式 ========== */
+        .auth-container {
+            max-width: 420px;
+            margin: 60px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .auth-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .auth-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: #f5f5f5;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+
+        .auth-tab.active {
+            background: white;
+            border-bottom-color: #667eea;
+            color: #667eea;
+        }
+
+        .auth-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+        }
+
+        .form-error {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .form-hint {
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* ========== 楼层选择器样式 ========== */
+        .floor-selector {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .floor-selector h3 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .floor-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .floor-tab {
+            padding: 12px 24px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            background: white;
+        }
+
+        .floor-tab:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .floor-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .floor-tab.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ========== 座位区域样式 ========== */
+        .seat-area {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .floor-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .floor-info h2 {
+            font-size: 22px;
+            color: #5b2c8b;
+        }
+
+        .seat-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .seat-stats span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .stat-dot.available {
+            background: #51cf66;
+        }
+
+        .stat-dot.reserved {
+            background: #ff6b6b;
+        }
+
+        .stat-dot.mine {
+            background: #339af0;
+        }
+
+        /* ========== 座位网格布局 ========== */
+        .seat-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .seat-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .seat-row-label {
+            width: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .aisle {
+            width: 30px;
+            height: 100%;
+        }
+
+        /* ========== 座位样式 ========== */
+        .seat {
+            width: 52px;
+            height: 52px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 11px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .seat .seat-icon {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+
+        .seat .seat-number {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+
+        /* 座位状态颜色 */
+        .seat.available {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+        }
+
+        .seat.available:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(81, 207, 102, 0.5);
+        }
+
+        .seat.reserved {
+            background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
+            color: white;
+            cursor: not-allowed;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .seat.mine {
+            background: linear-gradient(135deg, #339af0 0%, #228be6 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(51, 154, 240, 0.3);
+        }
+
+        .seat.mine:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(51, 154, 240, 0.5);
+        }
+
+        /* ========== 电子阅览室特殊样式 ========== */
+        .seat.computer {
+            width: 62px;
+        }
+
+        /* ========== 图例 ========== */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+        }
+
+        .legend-color.green {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+        }
+
+        .legend-color.red {
+            background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
+        }
+
+        .legend-color.blue {
+            background: linear-gradient(135deg, #339af0 0%, #228be6 100%);
+        }
+
+        /* ========== 我的预约摘要 ========== */
+        .my-reservations {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .my-reservations h3 {
+            font-size: 16px;
+            color: #5b2c8b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .my-reservations h3::before {
+            content: '📋';
+        }
+
+        .reservation-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .reservation-item {
+            background: linear-gradient(135deg, #339af0 0%, #228be6 100%);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reservation-item::before {
+            content: '🪑';
+        }
+
+        .no-reservation {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* ========== 弹窗样式 ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-buttons .btn {
+            min-width: 80px;
+        }
+
+        /* ========== 提示消息 ========== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 2000;
+            transition: transform 0.3s;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
+        }
+
+        /* ========== 隐藏类 ========== */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== 头部 ========== -->
+    <header class="header">
+        <h1>图书馆座位预约系统</h1>
+        <div class="user-info hidden" id="userInfo">
+            <span>欢迎，<strong id="currentUser"></strong></span>
+            <button class="btn btn-secondary" onclick="logout()">退出登录</button>
+        </div>
+    </header>
+
+    <!-- ========== 认证页面 ========== -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-header">
+            <h2>📚 欢迎使用</h2>
+            <p>图书馆座位预约系统</p>
+        </div>
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchAuthTab('login')">登录</div>
+            <div class="auth-tab" onclick="switchAuthTab('register')">注册</div>
+        </div>
+        
+        <!-- 登录表单 -->
+        <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="loginUsername">用户名</label>
+                <input type="text" id="loginUsername" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">密码</label>
+                <input type="password" id="loginPassword" placeholder="请输入密码" required>
+            </div>
+            <div class="form-error" id="loginError"></div>
+            <button type="submit" class="btn btn-primary form-submit">登录</button>
+        </form>
+
+        <!-- 注册表单 -->
+        <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label for="regUsername">用户名</label>
+                <input type="text" id="regUsername" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">密码</label>
+                <input type="password" id="regPassword" placeholder="请输入密码" required>
+            </div>
+            <div class="form-group">
+                <label for="regPhone">手机号码</label>
+                <input type="tel" id="regPhone" placeholder="请输入手机号码" required>
+                <p class="form-hint">* 实验性系统，无需验证</p>
+            </div>
+            <div class="form-group">
+                <label for="regStudentId">学号</label>
+                <input type="text" id="regStudentId" placeholder="请输入学号" required>
+                <p class="form-hint">* 实验性系统，无需验证</p>
+            </div>
+            <div class="form-error" id="registerError"></div>
+            <button type="submit" class="btn btn-primary form-submit">注册</button>
+        </form>
+    </div>
+
+    <!-- ========== 主应用界面 ========== -->
+    <div class="main-container hidden" id="mainContainer">
+        <!-- 楼层选择器 -->
+        <div class="floor-selector">
+            <h3>选择楼层</h3>
+            <div class="floor-tabs">
+                <div class="floor-tab active" onclick="selectFloor(1)" data-floor="1">
+                    一楼 - 普通阅览室
+                </div>
+                <div class="floor-tab" onclick="selectFloor(2)" data-floor="2">
+                    二楼 - 自习室
+                </div>
+                <div class="floor-tab" onclick="selectFloor(3)" data-floor="3">
+                    三楼 - 研讨室
+                </div>
+                <div class="floor-tab" onclick="selectFloor(4)" data-floor="4">
+                    四楼 - 电子阅览室
+                </div>
+            </div>
+        </div>
+
+        <!-- 座位显示区域 -->
+        <div class="seat-area">
+            <div class="floor-info">
+                <h2 id="floorTitle">一楼 - 普通阅览室</h2>
+                <div class="seat-stats">
+                    <span><span class="stat-dot available"></span> 可预约: <strong id="availableCount">40</strong></span>
+                    <span><span class="stat-dot reserved"></span> 已预约: <strong id="reservedCount">0</strong></span>
+                    <span><span class="stat-dot mine"></span> 我的: <strong id="myCount">0</strong></span>
+                </div>
+            </div>
+
+            <!-- 座位网格 -->
+            <div class="seat-grid" id="seatGrid">
+                <!-- 座位将通过JavaScript动态生成 -->
+            </div>
+
+            <!-- 图例 -->
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-color green"></span>
+                    <span>可预约</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color red"></span>
+                    <span>已被预约</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color blue"></span>
+                    <span>我的预约</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 我的预约摘要 -->
+        <div class="my-reservations">
+            <h3>我的预约</h3>
+            <div class="reservation-list" id="myReservationList">
+                <span class="no-reservation">暂无预约</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 确认弹窗 ========== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3 id="modalTitle">确认操作</h3>
+            <p id="modalMessage">确定要执行此操作吗？</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+                <button class="btn btn-primary" id="modalConfirmBtn" onclick="confirmAction()">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 提示消息 ========== -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ========== 全局状态 ==========
+        let currentUser = null;
+        let currentFloor = 1;
+        let pendingAction = null;
+
+        // ========== 楼层配置 ==========
+        const floorConfig = {
+            1: { name: '一楼 - 普通阅览室', seats: 40, cols: 8, rows: 5, type: 'normal' },
+            2: { name: '二楼 - 自习室', seats: 50, cols: 10, rows: 5, type: 'normal' },
+            3: { name: '三楼 - 研讨室', seats: 30, cols: 6, rows: 5, type: '研讨' },
+            4: { name: '四楼 - 电子阅览室', seats: 35, cols: 7, rows: 5, type: 'computer' }
+        };
+
+        // ========== 初始化 ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginState();
+        });
+
+        // ========== 认证相关函数 ==========
+        
+        // 切换登录/注册标签
+        function switchAuthTab(tab) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('registerForm').classList.add('hidden');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('registerForm').classList.remove('hidden');
+            }
+        }
+
+        // 处理登录
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errorEl = document.getElementById('loginError');
+
+            // 获取用户数据
+            const users = JSON.parse(localStorage.getItem('libraryUsers') || '{}');
+            
+            if (!users[username]) {
+                errorEl.textContent = '用户不存在';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            if (users[username].password !== password) {
+                errorEl.textContent = '密码错误';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            // 登录成功
+            currentUser = {
+                username: username,
+                phone: users[username].phone,
+                studentId: users[username].studentId
+            };
+            localStorage.setItem('libraryCurrentUser', JSON.stringify(currentUser));
+            
+            showMainApp();
+            showToast('登录成功！', 'success');
+        }
+
+        // 处理注册
+        function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const phone = document.getElementById('regPhone').value.trim();
+            const studentId = document.getElementById('regStudentId').value.trim();
+            const errorEl = document.getElementById('registerError');
+
+            // 获取用户数据
+            const users = JSON.parse(localStorage.getItem('libraryUsers') || '{}');
+            
+            if (users[username]) {
+                errorEl.textContent = '用户名已存在';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            // 保存用户
+            users[username] = {
+                password: password,
+                phone: phone,
+                studentId: studentId
+            };
+            localStorage.setItem('libraryUsers', JSON.stringify(users));
+
+            // 自动登录
+            currentUser = { username, phone, studentId };
+            localStorage.setItem('libraryCurrentUser', JSON.stringify(currentUser));
+
+            showMainApp();
+            showToast('注册成功！', 'success');
+        }
+
+        // 检查登录状态
+        function checkLoginState() {
+            const savedUser = localStorage.getItem('libraryCurrentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showMainApp();
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('libraryCurrentUser');
+            document.getElementById('authContainer').classList.remove('hidden');
+            document.getElementById('mainContainer').classList.add('hidden');
+            document.getElementById('userInfo').classList.add('hidden');
+            
+            // 清空表单
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+        }
+
+        // 显示主应用
+        function showMainApp() {
+            document.getElementById('authContainer').classList.add('hidden');
+            document.getElementById('mainContainer').classList.remove('hidden');
+            document.getElementById('userInfo').classList.remove('hidden');
+            document.getElementById('currentUser').textContent = currentUser.username;
+            
+            selectFloor(1);
+            updateMyReservations();
+        }
+
+        // ========== 楼层选择 ==========
+        
+        function selectFloor(floor) {
+            currentFloor = floor;
+            
+            // 更新标签状态
+            const tabs = document.querySelectorAll('.floor-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (parseInt(tab.dataset.floor) === floor) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // 更新标题
+            document.getElementById('floorTitle').textContent = floorConfig[floor].name;
+
+            // 生成座位
+            generateSeats(floor);
+            updateStats(floor);
+        }
+
+        // ========== 座位生成 ==========
+        
+        function generateSeats(floor) {
+            const config = floorConfig[floor];
+            const grid = document.getElementById('seatGrid');
+            grid.innerHTML = '';
+
+            for (let row = 0; row < config.rows; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'seat-row';
+
+                // 行标签
+                const label = document.createElement('div');
+                label.className = 'seat-row-label';
+                label.textContent = `${row + 1}排`;
+                rowDiv.appendChild(label);
+
+                for (let col = 0; col < config.cols; col++) {
+                    const seatIndex = row * config.cols + col + 1;
+                    
+                    // 检查是否超出座位数
+                    if (seatIndex > config.seats) break;
+
+                    // 添加过道（在第4列后）
+                    if (col === Math.floor(config.cols / 2) && config.cols > 4) {
+                        const aisle = document.createElement('div');
+                        aisle.className = 'aisle';
+                        rowDiv.appendChild(aisle);
+                    }
+
+                    const seat = createSeat(floor, seatIndex, config.type);
+                    rowDiv.appendChild(seat);
+                }
+
+                grid.appendChild(rowDiv);
+            }
+        }
+
+        function createSeat(floor, seatNum, type) {
+            const seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.dataset.floor = floor;
+            seat.dataset.seat = seatNum;
+
+            // 检查座位状态
+            const status = getSeatStatus(floor, seatNum);
+            seat.classList.add(status);
+
+            if (type === 'computer') {
+                seat.classList.add('computer');
+            }
+
+            // 座位内容
+            const icon = document.createElement('span');
+            icon.className = 'seat-icon';
+            icon.textContent = type === 'computer' ? '🖥️' : '🪑';
+            
+            const number = document.createElement('span');
+            number.className = 'seat-number';
+            number.textContent = seatNum;
+
+            seat.appendChild(icon);
+            seat.appendChild(number);
+
+            // 点击事件
+            seat.addEventListener('click', () => handleSeatClick(floor, seatNum));
+
+            return seat;
+        }
+
+        // ========== 座位状态管理 ==========
+        
+        function getSeatStatus(floor, seatNum) {
+            const key = `seat_${floor}_${seatNum}`;
+            const reservation = localStorage.getItem(key);
+            
+            if (!reservation) return 'available';
+            
+            const data = JSON.parse(reservation);
+            return data.username === currentUser.username ? 'mine' : 'reserved';
+        }
+
+        function handleSeatClick(floor, seatNum) {
+            const status = getSeatStatus(floor, seatNum);
+            const config = floorConfig[floor];
+
+            if (status === 'available') {
+                // 预约座位
+                showConfirmModal(
+                    '预约座位',
+                    `确定要预约 ${config.name} 的 ${seatNum} 号座位吗？`,
+                    () => reserveSeat(floor, seatNum)
+                );
+            } else if (status === 'mine') {
+                // 取消预约
+                showConfirmModal(
+                    '取消预约',
+                    `确定要取消 ${config.name} 的 ${seatNum} 号座位预约吗？`,
+                    () => cancelReservation(floor, seatNum)
+                );
+            } else {
+                showToast('该座位已被其他用户预约', 'error');
+            }
+        }
+
+        function reserveSeat(floor, seatNum) {
+            const key = `seat_${floor}_${seatNum}`;
+            const data = {
+                username: currentUser.username,
+                phone: currentUser.phone,
+                studentId: currentUser.studentId,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem(key, JSON.stringify(data));
+            
+            // 刷新界面
+            selectFloor(floor);
+            updateMyReservations();
+            showToast('预约成功！', 'success');
+        }
+
+        function cancelReservation(floor, seatNum) {
+            const key = `seat_${floor}_${seatNum}`;
+            localStorage.removeItem(key);
+            
+            // 刷新界面
+            selectFloor(floor);
+            updateMyReservations();
+            showToast('已取消预约', 'success');
+        }
+
+        // ========== 统计更新 ==========
+        
+        function updateStats(floor) {
+            const config = floorConfig[floor];
+            let available = 0;
+            let reserved = 0;
+            let mine = 0;
+
+            for (let i = 1; i <= config.seats; i++) {
+                const status = getSeatStatus(floor, i);
+                if (status === 'available') available++;
+                else if (status === 'mine') mine++;
+                else reserved++;
+            }
+
+            document.getElementById('availableCount').textContent = available;
+            document.getElementById('reservedCount').textContent = reserved;
+            document.getElementById('myCount').textContent = mine;
+        }
+
+        function updateMyReservations() {
+            const list = document.getElementById('myReservationList');
+            list.innerHTML = '';
+
+            let hasReservation = false;
+
+            // 遍历所有楼层
+            for (let floor = 1; floor <= 4; floor++) {
+                const config = floorConfig[floor];
+                for (let seat = 1; seat <= config.seats; seat++) {
+                    const status = getSeatStatus(floor, seat);
+                    if (status === 'mine') {
+                        hasReservation = true;
+                        const item = document.createElement('div');
+                        item.className = 'reservation-item';
+                        item.textContent = `${config.name.split(' - ')[0]} ${seat}号`;
+                        list.appendChild(item);
+                    }
+                }
+            }
+
+            if (!hasReservation) {
+                list.innerHTML = '<span class="no-reservation">暂无预约</span>';
+            }
+        }
+
+        // ========== 弹窗相关 ==========
+        
+        function showConfirmModal(title, message, callback) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            pendingAction = callback;
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            pendingAction = null;
+        }
+
+        function confirmAction() {
+            if (pendingAction) {
+                pendingAction();
+            }
+            closeModal();
+        }
+
+        // ========== 提示消息 ==========
+        
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type + ' show';
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
