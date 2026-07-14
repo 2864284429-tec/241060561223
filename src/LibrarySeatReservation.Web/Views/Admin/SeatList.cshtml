@@ -1,0 +1,265 @@
+@model LibrarySeatReservation.Web.Models.ViewModels.Admin.AdminSeatListViewModel
+@{
+    ViewData["Title"] = "座位管理";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- 成功/失败提示 -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert-custom alert-success mb-lg">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert-custom alert-error mb-lg">@TempData["ErrorMessage"]</div>
+}
+
+<!-- 页面标题 + 新增按钮 -->
+<div class="d-flex justify-content-between align-items-center mb-xl">
+    <div>
+        <h1 class="text-h1">座位管理</h1>
+        <p class="text-small" style="margin-top: 4px;">管理图书馆座位信息，支持新增、编辑和删除</p>
+    </div>
+    <button type="button" class="btn-custom btn-custom-primary" onclick="openCreateModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        新增座位
+    </button>
+</div>
+
+<!-- 座位表格 -->
+<div class="card-custom">
+    <div class="d-flex justify-content-between align-items-center mb-lg">
+        <span class="text-h3">座位列表</span>
+        <span class="text-small">共 @Model.Seats.Count 个座位</span>
+    </div>
+
+    @if (Model.Seats.Any())
+    {
+        <div style="overflow-x: auto;">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>座位名称</th>
+                        <th>位置</th>
+                        <th>容量</th>
+                        <th>设备</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var seat in Model.Seats)
+                    {
+                        <tr>
+                            <td><span class="text-body" style="font-family: monospace;">@seat.Id</span></td>
+                            <td><span class="text-body" style="font-weight: 500;">@seat.Name</span></td>
+                            <td>@seat.Location</td>
+                            <td>@seat.Capacity</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(seat.Features))
+                                {
+                                    <span>@seat.Features</span>
+                                }
+                                else
+                                {
+                                    <span class="text-small">无</span>
+                                }
+                            </td>
+                            <td>
+                                @if (seat.IsAvailable)
+                                {
+                                    <span class="badge-status badge-available">可用</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-status badge-disabled">不可用</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex gap-sm">
+                                    <button type="button" class="btn-custom btn-custom-secondary" style="height: 32px; padding: 0 12px; font-size: 12px;"
+                                            onclick="openEditModal(@seat.Id, '@seat.Name', '@seat.Location', @seat.Capacity, '@(seat.Features ?? "")', @(seat.IsAvailable ? "true" : "false"))">
+                                        编辑
+                                    </button>
+                                    <button type="button" class="btn-custom btn-custom-danger" style="height: 32px; padding: 0 12px; font-size: 12px;"
+                                            onclick="openDeleteModal(@seat.Id, '@seat.Name')">
+                                        删除
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                </svg>
+            </div>
+            <div class="empty-state-text">暂无座位数据</div>
+            <button type="button" class="btn-custom btn-custom-primary" onclick="openCreateModal()">新增第一个座位</button>
+        </div>
+    }
+</div>
+
+<!-- 新增座位模态框 -->
+<div id="createModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px;">
+    <div class="card-custom" style="width: 100%; max-width: 480px;">
+        <div class="d-flex justify-content-between align-items-center mb-lg">
+            <span class="text-h2">新增座位</span>
+            <button type="button" onclick="closeCreateModal()" style="background: none; border: none; cursor: pointer; padding: 4px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <form asp-action="Create" asp-controller="AdminSeat" method="post">
+            @Html.AntiForgeryToken()
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">座位名称 <span style="color: var(--error);">*</span></label>
+                <input type="text" name="Name" class="input-custom" placeholder="如：A-01" required />
+            </div>
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">位置 <span style="color: var(--error);">*</span></label>
+                <input type="text" name="Location" class="input-custom" placeholder="如：一楼靠窗" required />
+            </div>
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">容量</label>
+                <input type="number" name="Capacity" class="input-custom" value="1" min="1" />
+            </div>
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">设备信息</label>
+                <input type="text" name="Features" class="input-custom" placeholder="如：有电源、有台灯" />
+            </div>
+            <div class="mb-xl">
+                <label class="d-flex align-items-center gap-sm cursor-pointer">
+                    <input type="checkbox" name="IsAvailable" value="true" checked style="width: 16px; height: 16px;" />
+                    <span class="text-body">启用（可被预约）</span>
+                </label>
+            </div>
+            <div class="d-flex gap-sm">
+                <button type="submit" class="btn-custom btn-custom-primary" style="flex: 1;">确认新增</button>
+                <button type="button" class="btn-custom btn-custom-secondary" onclick="closeCreateModal()" style="flex: 1;">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 编辑座位模态框 -->
+<div id="editModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 16px;">
+    <div class="card-custom" style="width: 100%; max-width: 480px;">
+        <div class="d-flex justify-content-between align-items-center mb-lg">
+            <span class="text-h2">编辑座位</span>
+            <button type="button" onclick="closeEditModal()" style="background: none; border: none; cursor: pointer; padding: 4px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <form id="editForm" asp-action="Edit" asp-controller="AdminSeat" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="editId" name="id" value="" />
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">座位名称 <span style="color: var(--error);">*</span></label>
+                <input type="text" id="editName" name="Name" class="input-custom" required />
+            </div>
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">位置 <span style="color: var(--error);">*</span></label>
+                <input type="text" id="editLocation" name="Location" class="input-custom" required />
+            </div>
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">容量</label>
+                <input type="number" id="editCapacity" name="Capacity" class="input-custom" min="1" />
+            </div>
+            <div class="mb-lg">
+                <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">设备信息</label>
+                <input type="text" id="editFeatures" name="Features" class="input-custom" />
+            </div>
+            <div class="mb-xl">
+                <label class="d-flex align-items-center gap-sm cursor-pointer">
+                    <input type="checkbox" id="editIsAvailable" name="IsAvailable" value="true" style="width: 16px; height: 16px;" />
+                    <span class="text-body">启用（可被预约）</span>
+                </label>
+            </div>
+            <div class="d-flex gap-sm">
+                <button type="submit" class="btn-custom btn-custom-primary" style="flex: 1;">保存修改</button>
+                <button type="button" class="btn-custom btn-custom-secondary" onclick="closeEditModal()" style="flex: 1;">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 16px;">
+    <div class="card-custom" style="width: 100%; max-width: 400px;">
+        <div class="mb-lg">
+            <span class="text-h2">确认删除</span>
+        </div>
+        <p class="text-body mb-xl">确定要删除座位 <strong id="deleteSeatName"></strong> 吗？此操作不可恢复。</p>
+        <form id="deleteForm" asp-action="Delete" asp-controller="AdminSeat" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="deleteId" name="id" value="" />
+            <div class="d-flex gap-sm">
+                <button type="submit" class="btn-custom btn-custom-danger" style="flex: 1;">确认删除</button>
+                <button type="button" class="btn-custom btn-custom-secondary" onclick="closeDeleteModal()" style="flex: 1;">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // 新增模态框
+    function openCreateModal() {
+        document.getElementById('createModal').style.display = 'flex';
+    }
+    function closeCreateModal() {
+        document.getElementById('createModal').style.display = 'none';
+    }
+
+    // 编辑模态框
+    function openEditModal(id, name, location, capacity, features, isAvailable) {
+        document.getElementById('editId').value = id;
+        document.getElementById('editName').value = name;
+        document.getElementById('editLocation').value = location;
+        document.getElementById('editCapacity').value = capacity;
+        document.getElementById('editFeatures').value = features;
+        document.getElementById('editIsAvailable').checked = (isAvailable === 'true');
+        document.getElementById('editModal').style.display = 'flex';
+    }
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    // 删除确认模态框
+    function openDeleteModal(id, name) {
+        document.getElementById('deleteId').value = id;
+        document.getElementById('deleteSeatName').textContent = name;
+        document.getElementById('deleteModal').style.display = 'flex';
+    }
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    // 点击遮罩层关闭模态框
+    document.querySelectorAll('#createModal, #editModal, #deleteModal').forEach(function(modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+</script>
+}
