@@ -16,126 +16,67 @@
 
 | 技术 | 版本 | 用途 |
 |------|------|------|
-| ASP.NET Core MVC | .NET 8 | Web 框架 |
+| ASP.NET Core MVC | .NET 10* | Web 框架 |
 | Razor | - | 视图引擎 |
-| Entity Framework Core | 8.x | ORM |
+| Entity Framework Core | 10.x | ORM |
 | SQL Server LocalDB | - | 数据库 |
 | Bootstrap | 5.x | CSS 框架 |
-| jQuery | 3.x | JS 库（可选） |
+
+> \* 文档原定 .NET 8，因开发环境仅安装 .NET 10 SDK，功能无差异。
 
 ---
 
 ## 目录结构
 
-### 当前已存在
-
 ```
 LibrarySeatReservation/
-├── docs/                              # 项目文档
-│   ├── 01-项目立项单.md
-│   ├── 02-需求分析与MVP确认.md
-│   ├── 03-PRD-Lite.md
-│   ├── 04-页面树与业务流程.md
-│   ├── 05-页面卡与UI规范.md
-│   ├── 06-静态原型与原型评审.md
-│   ├── 07-系统设计说明.md
-│   ├── 08-数据库设计.md
-│   ├── 09-关键链路详细设计.md
-│   └── 10-开发准备与Sprint0.md
-│
-├── prototype/                         # 静态原型
-│   └── static-v1/                     # 第一版静态原型
-│       ├── css/custom.css
-│       ├── user-index.html
-│       ├── seat-list.html
-│       ├── seat-detail.html
-│       ├── booking-submit.html
-│       ├── my-bookings.html
-│       ├── admin-login.html
-│       ├── admin-booking.html
-│       ├── admin-seat.html
-│       └── admin-stats.html
-│
-└── README.md                          # 本文件
+├── docs/                              # 项目文档（12 份）
+├── prototype/static-v1/              # 静态原型（9 个 HTML 页面）
+├── src/LibrarySeatReservation.Web/   # 主项目（Sprint 0 已创建）
+│   ├── Controllers/                   # 控制器层（Sprint 1+ 实现）
+│   │   └── Admin/
+│   ├── Services/                      # 业务逻辑层 ✅
+│   │   ├── ISeatService.cs
+│   │   ├── SeatService.cs
+│   │   ├── IReservationService.cs
+│   │   ├── ReservationService.cs
+│   │   ├── IAdminAuthService.cs
+│   │   └── AdminAuthService.cs
+│   ├── DataAccess/                    # 数据访问层 ✅
+│   │   └── AppDbContext.cs
+│   ├── Models/
+│   │   ├── Entities/                  # 实体类 ✅
+│   │   │   ├── Seat.cs
+│   │   │   ├── Reservation.cs
+│   │   │   └── DemoUser.cs
+│   │   └── ViewModels/               # 视图模型 ✅
+│   │       ├── SeatListViewModel.cs
+│   │       ├── SeatDetailViewModel.cs
+│   │       ├── ReservationCreateViewModel.cs
+│   │       ├── MyBookingsViewModel.cs
+│   │       └── Admin/
+│   ├── Views/                         # Razor 视图（Sprint 1+ 实现）
+│   │   └── Shared/
+│   ├── Migrations/                    # EF Core 迁移 ✅
+│   ├── wwwroot/                       # 静态资源（Sprint 1+ 实现）
+│   ├── Program.cs                     # 启动入口 ✅
+│   ├── appsettings.json
+│   └── LibrarySeatReservation.Web.csproj
+├── LibrarySeatReservation.sln
+└── README.md
 ```
 
-### 后续计划 / 待生成
-
-```
-LibrarySeatReservation/
-├── Controllers/                       # 控制器层
-│   ├── HomeController.cs              # 用户首页
-│   ├── SeatController.cs              # 座位列表、详情
-│   ├── ReservationController.cs       # 预约提交、我的预约、取消
-│   └── Admin/
-│       ├── AdminAuthController.cs     # 管理员登录
-│       ├── AdminHomeController.cs     # 预约管理
-│       └── AdminSeatController.cs     # 座位管理
-│
-├── Services/                          # 业务逻辑层
-│   ├── ISeatService.cs
-│   ├── SeatService.cs
-│   ├── IReservationService.cs
-│   ├── ReservationService.cs
-│   ├── IAdminAuthService.cs
-│   └── AdminAuthService.cs
-│
-├── DataAccess/                        # 数据访问层
-│   ├── AppDbContext.cs
-│   └── SeedData.cs
-│
-├── Models/
-│   ├── Entities/
-│   │   ├── Seat.cs
-│   │   ├── Reservation.cs
-│   │   └── DemoUser.cs
-│   └── ViewModels/
-│       ├── SeatListViewModel.cs
-│       ├── SeatDetailViewModel.cs
-│       ├── ReservationCreateViewModel.cs
-│       ├── MyBookingsViewModel.cs
-│       ├── BookingItem.cs
-│       └── Admin/
-│           ├── AdminSeatListViewModel.cs
-│           ├── AdminSeatItem.cs
-│           └── AdminReservationListViewModel.cs
-│
-├── Views/
-│   ├── Home/Index.cshtml
-│   ├── Seat/List.cshtml
-│   ├── Seat/Detail.cshtml
-│   ├── Reservation/Create.cshtml
-│   ├── Reservation/My.cshtml
-│   ├── Admin/Login.cshtml
-│   ├── Admin/ReservationList.cshtml
-│   ├── Admin/SeatList.cshtml
-│   └── Shared/
-│       ├── _Layout.cshtml
-│       ├── _AdminLayout.cshtml
-│       └── _ViewStart.cshtml
-│
-├── wwwroot/
-│   ├── css/custom.css
-│   └── js/site.js
-│
-├── Program.cs
-├── appsettings.json
-└── LibrarySeatReservation.csproj
-```
+> ✅ = Sprint 0 已创建 | 空白 = 对应 Sprint 实现时填充
 
 ---
 
 ## 运行前提
 
-### 开发环境
-
 | 工具 | 版本要求 | 说明 |
 |------|----------|------|
-| .NET SDK | 8.0+ | [下载地址](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| .NET SDK | 8.0+ | [下载地址](https://dotnet.microsoft.com/download) |
 | SQL Server LocalDB | - | Visual Studio 自带，或单独安装 |
 | IDE | - | Visual Studio 2022 / VS Code + C# 扩展 |
-
-### 验证环境
 
 ```bash
 # 检查 .NET SDK 版本
@@ -149,72 +90,35 @@ sqlcmd -S "(localdb)\mssqllocaldb" -Q "SELECT 1"
 
 ## 快速开始
 
-> ⚠️ 以下步骤需要在"开发起步与项目骨架"阶段完成后才能执行。
-
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/your-username/LibrarySeatReservation.git
-cd LibrarySeatReservation
+git clone https://github.com/2864284429-tec/241060561223.git
+cd 241060561223
 
 # 2. 还原依赖
 dotnet restore
 
-# 3. 数据库迁移
-dotnet ef migrations add InitialCreate
-dotnet ef database update
+# 3. 运行项目（数据库自动迁移 + 种子数据自动初始化）
+dotnet run --project src/LibrarySeatReservation.Web
 
-# 4. 运行项目
-dotnet run
-
-# 5. 访问应用
+# 4. 访问应用
 # 用户端：http://localhost:5000
 # 管理端：http://localhost:5000/Admin/Login
 ```
 
----
-
-## 已实现范围
-
-> 📝 本节将在每个 Sprint 完成后更新。
-
-| 阶段 | 已完成内容 | 状态 |
-|------|------------|------|
-| 文档阶段 | 项目立项、需求分析、PRD、页面树、UI 规范、原型、系统设计、数据库设计、关键链路设计 | ✅ |
-| Sprint 0 | 项目骨架、数据库迁移、种子数据 | ⏳ 待开发 |
-| Sprint 1 | 用户首页、座位列表、座位详情 | ⏳ 待开发 |
-| Sprint 2 | 预约提交、我的预约、取消预约 | ⏳ 待开发 |
-| Sprint 3 | 管理员登录、预约管理、座位管理 | ⏳ 待开发 |
-| Sprint 4 | 统计页、联调测试 | ⏳ 待开发 |
-
----
-
-## 数据库初始化
-
-> ⚠️ 需要先执行数据库迁移。
-
-```bash
-# 创建迁移
-dotnet ef migrations add InitialCreate
-
-# 应用迁移到数据库
-dotnet ef database update
-```
-
-种子数据会在首次运行时自动初始化（通过 `Program.cs` 中的 `SeedData.Initialize()` 方法）。
+> 数据库建表和种子数据在首次启动时通过 `Program.cs` 中的 `db.Database.Migrate()` + `SeedData.Initialize()` 自动完成。
 
 ---
 
 ## 演示账号
 
-### 学生用户（体验账号）
+### 学生用户
 
 | 账号 ID | 姓名 | 说明 |
 |---------|------|------|
 | user1 | 小王 | 体验账号 |
 | user2 | 小李 | 体验账号 |
 | user3 | 小张 | 体验账号 |
-
-> 切换账号通过页面上的下拉框或按钮实现，数据存储在 Session 中。
 
 ### 管理员
 
@@ -224,15 +128,16 @@ dotnet ef database update
 
 ---
 
-## 已知限制
+## 已实现范围
 
-| 项目 | 说明 |
-|------|------|
-| 并发处理 | 单人课堂项目，不考虑高并发 |
-| 用户认证 | 体验账号切换，无注册登录体系 |
-| 数据导出 | 不支持 Excel/CSV 导出 |
-| 消息通知 | 不支持短信/邮件通知 |
-| 移动端适配 | 以 PC 端演示为主 |
+| 阶段 | 已完成内容 | 状态 |
+|------|------------|------|
+| 文档阶段 | 项目立项、需求分析、PRD、页面树、UI 规范、原型、系统设计、数据库设计、关键链路设计、一致性审计 | ✅ |
+| Sprint 0 | 项目骨架（sln + csproj）、Entity 实体类、DbContext + 种子数据、Service 接口与实现、EF Core 迁移、Program.cs 配置 | ✅ |
+| Sprint 1 | 用户首页、座位列表、座位详情 | ⏳ 待开发 |
+| Sprint 2 | 预约提交、我的预约、取消预约 | ⏳ 待开发 |
+| Sprint 3 | 管理员登录、预约管理、座位管理 | ⏳ 待开发 |
+| Sprint 4 | 统计页、联调测试 | ⏳ 待开发 |
 
 ---
 
@@ -248,6 +153,8 @@ dotnet ef database update
 - [数据库设计](docs/08-数据库设计.md)
 - [关键链路详细设计](docs/09-关键链路详细设计.md)
 - [开发准备与 Sprint 0](docs/10-开发准备与Sprint0.md)
+- [开发前一致性总审计](docs/11-开发前一致性总审计.md)
+- [开发起步与骨架记录](docs/12-开发起步与骨架记录.md)
 
 ---
 
