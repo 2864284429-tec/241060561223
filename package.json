@@ -1,0 +1,31 @@
+{
+  "name": "3",
+  "version": "1.0.0",
+  "description": "> 让同学们在线上看到哪些座位有空位，提前预约，到了图书馆直接坐下学习。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2864284429-tec/241060561223.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/2864284429-tec/241060561223/issues"
+  },
+  "homepage": "https://github.com/2864284429-tec/241060561223#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1",
+    "playwright-core": "^1.61.1"
+  }
+}

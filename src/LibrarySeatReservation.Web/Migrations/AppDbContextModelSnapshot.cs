@@ -38,7 +38,7 @@ namespace LibrarySeatReservation.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DemoUsers");
+                    b.ToTable("DemoUsers", (string)null);
 
                     b.HasData(
                         new
@@ -104,7 +104,7 @@ namespace LibrarySeatReservation.Web.Migrations
 
                     b.HasIndex("SeatId", "Date", "TimeSlot", "Status");
 
-                    b.ToTable("Reservations", t =>
+                    b.ToTable("Reservations", null, t =>
                         {
                             t.HasCheckConstraint("CK_Reservations_TimeSlot", "[TimeSlot] >= 8 AND [TimeSlot] <= 20");
                         });
@@ -146,7 +146,7 @@ namespace LibrarySeatReservation.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Seats");
+                    b.ToTable("Seats", (string)null);
 
                     b.HasData(
                         new

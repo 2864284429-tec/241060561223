@@ -19,7 +19,7 @@
 | ASP.NET Core MVC | .NET 10* | Web 框架 |
 | Razor | - | 视图引擎 |
 | Entity Framework Core | 10.x | ORM |
-| SQL Server LocalDB | - | 数据库 |
+| SQL Server LocalDB / SQLite | - | 数据库（macOS 自动回退 SQLite） |
 | Bootstrap | 5.x | CSS 框架 |
 
 > \* 文档原定 .NET 8，因开发环境仅安装 .NET 10 SDK，功能无差异。
@@ -30,16 +30,13 @@
 
 ```
 LibrarySeatReservation/
-├── docs/                              # 项目文档（15 份）
+├── docs/                              # 项目文档（16 份）
 ├── prototype/static-v1/              # 静态原型（9 个 HTML 页面）
 ├── src/LibrarySeatReservation.Web/   # 主项目
 │   ├── Controllers/                   # 控制器层
 │   │   ├── HomeController.cs          ✅ Sprint 1
 │   │   ├── SeatController.cs          ✅ Sprint 1
-│   │       └── Admin/
-│   │           ├── AdminAuthController.cs     ✅ Sprint 3
-│   │           ├── AdminHomeController.cs     ✅ Sprint 3
-│   │           └── AdminSeatController.cs     ✅ Sprint 3
+│   │   ├── AdminController.cs            ✅ Sprint 3+4
 │   ├── Services/                      # 业务逻辑层 ✅
 │   │   ├── ISeatService.cs
 │   │   ├── SeatService.cs
@@ -122,7 +119,7 @@ dotnet run --project src/LibrarySeatReservation.Web
 # 管理端：http://localhost:5000/Admin/Login
 ```
 
-> 数据库建表和种子数据在首次启动时通过 `Program.cs` 中的 `db.Database.Migrate()` + `SeedData.Initialize()` 自动完成。
+> 数据库建表和种子数据在首次启动时通过 `Program.cs` 中的 `db.Database.EnsureCreated()` + `SeedData.Initialize()` 自动完成。
 
 ---
 
@@ -154,7 +151,8 @@ dotnet run --project src/LibrarySeatReservation.Web
 | Sprint 2 | 预约提交、我的预约、取消预约 | ⏳ 待开发 |
 | Sprint 3（第 1 轮） | 管理员登录（GET/POST）、Session 权限守卫、预约管理页（最小可用版）、管理端布局（侧边栏） | ✅ |
 | Sprint 3（第 2 轮） | 座位管理（AdminSeatController + SeatList 视图 + CRUD + 管理端布局 CSS） | ✅ |
-| Sprint 4 | 统计页、联调测试 | ⏳ 待开发 |
+| Sprint 4（第 1 轮） | 联调测试（脚本冒烟 7/7 + Playwright 自动化 10/10）、P0 Bug 修复（3 个全部闭环）、UI 细节调整、docs/16 联调测试与缺陷闭环记录 | ✅ |
+| Sprint 4（第 2 轮） | 统计页功能 | ⏳ 待开发 |
 
 ---
 
@@ -175,6 +173,7 @@ dotnet run --project src/LibrarySeatReservation.Web
 - [用户端主链路开发记录](docs/13-用户端主链路开发记录.md)
 - [管理端与权限开发记录](docs/14-管理端与权限开发记录.md)
 - [功能完善与体验优化记录](docs/15-功能完善与体验优化记录.md)
+- [联调测试与缺陷闭环记录](docs/16-联调测试与缺陷闭环.md)
 
 ---
 

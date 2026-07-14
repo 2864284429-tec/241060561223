@@ -4,9 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// EF Core - SQL Server LocalDB
+// EF Core - 优先 SQL Server，不可用时回退 SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var sqliteConn = builder.Configuration.GetConnectionString("SqliteConnection");
+    if (!string.IsNullOrEmpty(sqliteConn))
+    {
+        options.UseSqlite(sqliteConn);
+    }
+    else
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    }
+});
 
 // Session
 builder.Services.AddDistributedMemoryCache();
@@ -31,7 +41,15 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    // SQLite 使用 EnsureCreated；SQL Server 使用 Migrate
+    if (db.Database.IsSqlite())
+    {
+        db.Database.EnsureCreated();
+    }
+    else
+    {
+        db.Database.Migrate();
+    }
 }
 
 // 开发环境种子数据（EF Core HasData 已包含种子数据，Migrate 自动应用）

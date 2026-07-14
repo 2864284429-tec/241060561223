@@ -124,7 +124,7 @@
                 </svg>
             </button>
         </div>
-        <form asp-action="Create" asp-controller="AdminSeat" method="post">
+        <form asp-action="Create" asp-controller="Admin" method="post">
             @Html.AntiForgeryToken()
             <div class="mb-lg">
                 <label class="text-body" style="font-weight: 500; display: block; margin-bottom: 6px;">座位名称 <span style="color: var(--error);">*</span></label>
@@ -168,7 +168,7 @@
                 </svg>
             </button>
         </div>
-        <form id="editForm" asp-action="Edit" asp-controller="AdminSeat" method="post">
+        <form id="editForm" asp-action="Edit" asp-controller="Admin" method="post">
             @Html.AntiForgeryToken()
             <input type="hidden" id="editId" name="id" value="" />
             <div class="mb-lg">
@@ -208,7 +208,7 @@
             <span class="text-h2">确认删除</span>
         </div>
         <p class="text-body mb-xl">确定要删除座位 <strong id="deleteSeatName"></strong> 吗？此操作不可恢复。</p>
-        <form id="deleteForm" asp-action="Delete" asp-controller="AdminSeat" method="post">
+        <form id="deleteForm" asp-action="Delete" asp-controller="Admin" method="post">
             @Html.AntiForgeryToken()
             <input type="hidden" id="deleteId" name="id" value="" />
             <div class="d-flex gap-sm">

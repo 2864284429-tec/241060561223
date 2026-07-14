@@ -69,15 +69,17 @@ public class AppDbContext : DbContext
         );
 
         // 种子数据：初始座位
+        // 注意：HasData 不允许动态值（如 DateTime.UtcNow），必须使用固定值
+        var seedTime = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         modelBuilder.Entity<Seat>().HasData(
-            new Seat { Id = 1, Name = "A-01", Location = "一楼靠窗", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Seat { Id = 2, Name = "A-02", Location = "一楼靠窗", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Seat { Id = 3, Name = "A-03", Location = "一楼靠窗", Capacity = 1, Features = "有台灯", IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Seat { Id = 4, Name = "B-01", Location = "二楼安静区", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Seat { Id = 5, Name = "B-02", Location = "二楼安静区", Capacity = 1, Features = null, IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Seat { Id = 6, Name = "B-03", Location = "二楼安静区", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Seat { Id = 7, Name = "C-01", Location = "三楼讨论区", Capacity = 4, Features = "有电源、有白板", IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Seat { Id = 8, Name = "C-02", Location = "三楼讨论区", Capacity = 4, Features = "有电源", IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+            new Seat { Id = 1, Name = "A-01", Location = "一楼靠窗", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Seat { Id = 2, Name = "A-02", Location = "一楼靠窗", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Seat { Id = 3, Name = "A-03", Location = "一楼靠窗", Capacity = 1, Features = "有台灯", IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Seat { Id = 4, Name = "B-01", Location = "二楼安静区", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Seat { Id = 5, Name = "B-02", Location = "二楼安静区", Capacity = 1, Features = null, IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Seat { Id = 6, Name = "B-03", Location = "二楼安静区", Capacity = 1, Features = "有电源", IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Seat { Id = 7, Name = "C-01", Location = "三楼讨论区", Capacity = 4, Features = "有电源、有白板", IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Seat { Id = 8, Name = "C-02", Location = "三楼讨论区", Capacity = 4, Features = "有电源", IsAvailable = true, CreatedAt = seedTime, UpdatedAt = seedTime }
         );
     }
 }

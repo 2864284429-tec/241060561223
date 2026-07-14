@@ -16,9 +16,19 @@ Thumbs.db
 # Database
 *.mdf
 *.ldf
+*.db
+*.db-shm
+*.db-wal
 
 # Local
 appsettings.Development.json
 
 # OMO
 .omo/
+
+# Node
+node_modules/
+
+# Test results
+test-results/
+playwright-report/
