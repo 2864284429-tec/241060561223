@@ -115,8 +115,8 @@ dotnet restore
 dotnet run --project src/LibrarySeatReservation.Web
 
 # 4. 访问应用
-# 用户端：http://localhost:5000
-# 管理端：http://localhost:5000/Admin/Login
+# 用户端：http://localhost:5123
+# 管理端：http://localhost:5123/Admin/Login
 ```
 
 > 数据库建表和种子数据在首次启动时通过 `Program.cs` 中的 `db.Database.EnsureCreated()` + `SeedData.Initialize()` 自动完成。
