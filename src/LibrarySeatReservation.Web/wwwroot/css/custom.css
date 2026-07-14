@@ -1,0 +1,475 @@
+/* ============================================
+   图书馆座位预约系统 - 自定义样式
+   基于 Bootstrap 5 + 自定义设计规范
+   ============================================ */
+
+/* ---- 1. 设计令牌 (Design Tokens) ---- */
+:root {
+  /* 主色 */
+  --primary: #2563EB;
+  --primary-light: #DBEAFE;
+  --primary-dark: #1D4ED8;
+
+  /* 语义色 */
+  --success: #16A34A;
+  --success-light: #DCFCE7;
+  --warning: #EA580C;
+  --warning-light: #FEF3C7;
+  --error: #DC2626;
+  --error-light: #FEE2E2;
+  --info: #2563EB;
+  --info-light: #DBEAFE;
+
+  /* 中性色 */
+  --black: #111827;
+  --dark-gray: #374151;
+  --gray: #6B7280;
+  --light-gray: #E5E7EB;
+  --ultra-light: #F3F4F6;
+  --white: #FFFFFF;
+
+  /* 状态标签 */
+  --tag-available-bg: #DCFCE7;
+  --tag-available-text: #16A34A;
+  --tag-booked-bg: #DBEAFE;
+  --tag-booked-text: #2563EB;
+  --tag-cancelled-bg: #FEE2E2;
+  --tag-cancelled-text: #DC2626;
+  --tag-expired-bg: #FEF3C7;
+  --tag-expired-text: #EA580C;
+  --tag-disabled-bg: #F3F4F6;
+  --tag-disabled-text: #6B7280;
+
+  /* 间距 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 12px;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* 字体 */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* 用户端导航 */
+  --navbar-height: 56px;
+}
+
+/* ---- 2. 全局基础 ---- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--black);
+  background-color: var(--ultra-light);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- 3. 字体层级 ---- */
+.text-h1 { font-size: 24px; line-height: 32px; font-weight: 600; color: var(--black); }
+.text-h2 { font-size: 20px; line-height: 28px; font-weight: 600; color: var(--black); }
+.text-h3 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--black); }
+.text-body { font-size: 14px; line-height: 20px; font-weight: 400; color: var(--black); }
+.text-small { font-size: 12px; line-height: 16px; font-weight: 400; color: var(--gray); }
+.text-caption { font-size: 10px; line-height: 14px; font-weight: 400; color: var(--gray); }
+
+/* ---- 4. 按钮 ---- */
+.btn-custom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  gap: 8px;
+}
+
+.btn-custom-primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+.btn-custom-primary:hover {
+  background-color: var(--primary-dark);
+  color: var(--white);
+}
+
+.btn-custom-secondary {
+  background-color: var(--white);
+  color: var(--dark-gray);
+  border: 1px solid var(--light-gray);
+}
+.btn-custom-secondary:hover {
+  border-color: var(--gray);
+  color: var(--black);
+}
+
+.btn-custom-danger {
+  background-color: var(--error);
+  color: var(--white);
+}
+.btn-custom-danger:hover {
+  background-color: #B91C1C;
+  color: var(--white);
+}
+
+.btn-custom-text {
+  background-color: transparent;
+  color: var(--primary);
+  padding: 0 12px;
+}
+.btn-custom-text:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-custom-disabled {
+  background-color: var(--ultra-light);
+  color: var(--gray);
+  cursor: not-allowed;
+}
+
+.btn-full-width {
+  width: 100%;
+}
+
+/* ---- 5. 输入框 ---- */
+.input-custom {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--black);
+  background-color: var(--white);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.input-custom::placeholder {
+  color: var(--gray);
+}
+.input-custom:focus {
+  border-color: var(--primary);
+  border-width: 2px;
+  padding: 0 11px;
+}
+
+/* ---- 6. 卡片 ---- */
+.card-custom {
+  background-color: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-lg);
+}
+
+.card-custom-clickable {
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-custom-clickable:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+/* ---- 7. 状态标签 ---- */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.badge-available {
+  background-color: var(--tag-available-bg);
+  color: var(--tag-available-text);
+}
+
+.badge-booked {
+  background-color: var(--tag-booked-bg);
+  color: var(--tag-booked-text);
+}
+
+.badge-cancelled {
+  background-color: var(--tag-cancelled-bg);
+  color: var(--tag-cancelled-text);
+}
+
+.badge-expired {
+  background-color: var(--tag-expired-bg);
+  color: var(--tag-expired-text);
+}
+
+.badge-disabled {
+  background-color: var(--tag-disabled-bg);
+  color: var(--tag-disabled-text);
+}
+
+/* ---- 8. 表格 ---- */
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-custom thead th {
+  background-color: #F9FAFB;
+  color: var(--dark-gray);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.table-custom tbody td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--black);
+  border-bottom: 1px solid var(--light-gray);
+  vertical-align: middle;
+}
+
+.table-custom tbody tr:hover {
+  background-color: var(--ultra-light);
+}
+
+/* ---- 9. 用户端导航栏 ---- */
+.user-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 1000;
+}
+
+.user-navbar-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--black);
+  flex: 1;
+  text-align: center;
+}
+
+.user-navbar-back {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--black);
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.user-navbar-placeholder {
+  width: 40px;
+}
+
+/* ---- 10. 用户端页面容器 ---- */
+.user-page {
+  padding-top: var(--navbar-height);
+  min-height: 100vh;
+  background-color: var(--ultra-light);
+}
+
+.user-page-content {
+  padding: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ---- 11. 页面区块 ---- */
+.section-block {
+  margin-bottom: var(--space-xl);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: var(--space-md);
+}
+
+/* ---- 12. 空状态 ---- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state-text {
+  font-size: 14px;
+  color: var(--gray);
+  margin-bottom: 24px;
+}
+
+/* ---- 13. 提示框 ---- */
+.alert-custom {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.alert-success {
+  background-color: var(--success-light);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.alert-error {
+  background-color: var(--error-light);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+.alert-warning {
+  background-color: var(--warning-light);
+  color: var(--warning);
+  border: 1px solid var(--warning);
+}
+
+.alert-info {
+  background-color: var(--info-light);
+  color: var(--info);
+  border: 1px solid var(--info);
+}
+
+/* ---- 14. 时段选择 ---- */
+.time-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.time-slot-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--dark-gray);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--white);
+}
+
+.time-slot-item:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.time-slot-item.selected {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+}
+
+.time-slot-item.disabled {
+  background-color: var(--ultra-light);
+  color: var(--gray);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* ---- 15. 进度条 ---- */
+.progress-custom {
+  height: 8px;
+  background-color: var(--ultra-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-custom {
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* ---- 16. 分割线 ---- */
+.divider {
+  height: 1px;
+  background-color: var(--light-gray);
+  margin: 16px 0;
+}
+
+/* ---- 17. 响应式 ---- */
+@media (max-width: 639px) {
+  .user-page-content {
+    padding: 12px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .user-page-content {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .user-page-content {
+    max-width: 640px;
+  }
+}
+
+/* ---- 18. 工具类 ---- */
+.cursor-pointer { cursor: pointer; }
+.text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+.gap-lg { gap: var(--space-lg); }
+.mb-xs { margin-bottom: var(--space-xs); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.mb-xl { margin-bottom: var(--space-xl); }
+.mb-2xl { margin-bottom: var(--space-2xl); }
+.mt-lg { margin-top: var(--space-lg); }
+.mt-xl { margin-top: var(--space-xl); }
+.p-lg { padding: var(--space-lg); }
+.p-xl { padding: var(--space-xl); }

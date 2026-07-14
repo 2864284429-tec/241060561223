@@ -33,7 +33,9 @@ LibrarySeatReservation/
 ├── docs/                              # 项目文档（12 份）
 ├── prototype/static-v1/              # 静态原型（9 个 HTML 页面）
 ├── src/LibrarySeatReservation.Web/   # 主项目（Sprint 0 已创建）
-│   ├── Controllers/                   # 控制器层（Sprint 1+ 实现）
+│   ├── Controllers/                   # 控制器层
+│   │   ├── HomeController.cs          ✅ Sprint 1
+│   │   ├── SeatController.cs          ✅ Sprint 1
 │   │   └── Admin/
 │   ├── Services/                      # 业务逻辑层 ✅
 │   │   ├── ISeatService.cs
@@ -55,10 +57,14 @@ LibrarySeatReservation/
 │   │       ├── ReservationCreateViewModel.cs
 │   │       ├── MyBookingsViewModel.cs
 │   │       └── Admin/
-│   ├── Views/                         # Razor 视图（Sprint 1+ 实现）
-│   │   └── Shared/
+│   ├── Views/                         # Razor 视图
+│   │   ├── Home/Index.cshtml          ✅ Sprint 1
+│   │   ├── Seat/List.cshtml           ✅ Sprint 1
+│   │   ├── Seat/Detail.cshtml         ✅ Sprint 1
+│   │   └── Shared/_Layout.cshtml      ✅ Sprint 1
 │   ├── Migrations/                    # EF Core 迁移 ✅
-│   ├── wwwroot/                       # 静态资源（Sprint 1+ 实现）
+│   ├── wwwroot/                       # 静态资源
+│   │   └── css/custom.css             ✅ Sprint 1
 │   ├── Program.cs                     # 启动入口 ✅
 │   ├── appsettings.json
 │   └── LibrarySeatReservation.Web.csproj
@@ -134,7 +140,7 @@ dotnet run --project src/LibrarySeatReservation.Web
 |------|------------|------|
 | 文档阶段 | 项目立项、需求分析、PRD、页面树、UI 规范、原型、系统设计、数据库设计、关键链路设计、一致性审计 | ✅ |
 | Sprint 0 | 项目骨架（sln + csproj）、Entity 实体类、DbContext + 种子数据、Service 接口与实现、EF Core 迁移、Program.cs 配置 | ✅ |
-| Sprint 1 | 用户首页、座位列表、座位详情 | ⏳ 待开发 |
+| Sprint 1 | 用户首页、座位列表、座位详情（Controller + Razor 视图 + 自定义样式） | ✅ |
 | Sprint 2 | 预约提交、我的预约、取消预约 | ⏳ 待开发 |
 | Sprint 3 | 管理员登录、预约管理、座位管理 | ⏳ 待开发 |
 | Sprint 4 | 统计页、联调测试 | ⏳ 待开发 |

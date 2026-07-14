@@ -1,0 +1,102 @@
+@model List<LibrarySeatReservation.Web.Models.ViewModels.SeatListItem>
+@{
+    ViewData["Title"] = "座位列表";
+}
+
+<nav class="user-navbar">
+    <a asp-controller="Home" asp-action="Index" class="user-navbar-back">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+    </a>
+    <div class="user-navbar-title">座位列表</div>
+    <div class="user-navbar-placeholder"></div>
+</nav>
+
+<div class="user-page">
+    <div class="user-page-content">
+        @{
+            var availableCount = Model.Count(s => s.CurrentStatus == "可用");
+        }
+
+        @if (availableCount > 0)
+        {
+            <div class="section-block">
+                <div class="alert-custom alert-success">
+                    <div class="d-flex align-items-center gap-sm">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <span>今日还有 @availableCount 个座位可预约</span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="section-block">
+            <div class="section-title">座位列表</div>
+
+            @if (!Model.Any())
+            {
+                <div class="empty-state">
+                    <div class="empty-state-icon">💺</div>
+                    <div class="empty-state-text">暂无座位信息</div>
+                </div>
+            }
+            else
+            {
+                @foreach (var seat in Model)
+                {
+                    var isDisabled = seat.CurrentStatus == "不可用" || seat.CurrentStatus == "已预约";
+                    <a asp-controller="Seat" asp-action="Detail" asp-route-id="@seat.Id"
+                       class="card-custom card-custom-clickable mb-md d-block text-decoration-none @(isDisabled ? "opacity-50" : "")">
+                        <div class="d-flex justify-content-between align-items-start mb-sm">
+                            <div>
+                                <div class="text-h3">@seat.Name</div>
+                                <div class="text-small mt-1">@seat.Location@(seat.Features != null ? $" · {seat.Features}" : "")</div>
+                            </div>
+                            @if (seat.CurrentStatus == "可用")
+                            {
+                                <span class="badge-status badge-available">可预约</span>
+                            }
+                            else if (seat.CurrentStatus == "已预约")
+                            {
+                                <span class="badge-status badge-booked">已预约</span>
+                            }
+                            else
+                            {
+                                <span class="badge-status badge-disabled">不可用</span>
+                            }
+                        </div>
+                        <div class="divider"></div>
+                        <div class="d-flex justify-content-between text-small">
+                            @if (seat.CurrentStatus == "可用")
+                            {
+                                <span>08:00 - 21:00 可选</span>
+                                <span style="color: var(--primary);">查看详情 →</span>
+                            }
+                            else if (seat.CurrentStatus == "已预约")
+                            {
+                                <span>今日全部时段已满</span>
+                                <span class="text-small" style="color: var(--gray);">暂不可选</span>
+                            }
+                            else
+                            {
+                                <span>座位不可用</span>
+                                <span class="text-small" style="color: var(--gray);">暂不可选</span>
+                            }
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+
+        <div class="d-flex gap-sm mb-xl">
+            <span class="badge-status badge-available">可预约</span>
+            <span class="badge-status badge-booked">已预约</span>
+        </div>
+
+        <div style="height: 32px;"></div>
+    </div>
+</div>

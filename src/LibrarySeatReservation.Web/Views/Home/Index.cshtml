@@ -1,8 +1,84 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "图书馆座位预约";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<nav class="user-navbar">
+    <div class="user-navbar-placeholder"></div>
+    <div class="user-navbar-title">图书馆座位预约</div>
+    <div class="user-navbar-placeholder"></div>
+</nav>
+
+<div class="user-page">
+    <div class="user-page-content">
+
+        <div class="section-block">
+            <div class="text-h2 mb-md">欢迎回来</div>
+            <div class="text-small">@DateTime.Now.ToString("yyyy年M月d日 dddd")</div>
+        </div>
+
+        <div class="section-block">
+            <div class="card-custom" style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border: none; color: #fff;">
+                <div class="text-small" style="color: rgba(255,255,255,0.8);">今日座位使用率</div>
+                <div class="d-flex align-items-center gap-md mt-lg">
+                    <div style="font-size: 36px; font-weight: 700;">--</div>
+                    <div style="flex:1;">
+                        <div class="text-small mt-2" style="color: rgba(255,255,255,0.7);">登录后查看实时数据</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-title">快捷入口</div>
+            <div class="row g-3">
+                <div class="col-6">
+                    <a asp-controller="Seat" asp-action="List" class="card-custom card-custom-clickable d-block text-center text-decoration-none" style="padding: 24px 16px;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 8px;">
+                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                            <path d="M3 10h18"></path>
+                            <path d="M8 4v4"></path>
+                            <path d="M16 4v4"></path>
+                        </svg>
+                        <div class="text-body" style="font-weight: 600;">选择座位</div>
+                        <div class="text-small mt-1">浏览可用座位</div>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a href="#" class="card-custom card-custom-clickable d-block text-center text-decoration-none" style="padding: 24px 16px;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 8px;">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path>
+                            <rect x="9" y="3" width="6" height="4" rx="1"></rect>
+                            <path d="M9 14l2 2 4-4"></path>
+                        </svg>
+                        <div class="text-body" style="font-weight: 600;">我的预约</div>
+                        <div class="text-small mt-1">查看预约记录</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-title">预约须知</div>
+            <div class="card-custom" style="background-color: var(--info-light); border-color: var(--primary);">
+                <div class="d-flex gap-md">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    <div>
+                        <div class="text-body mb-sm" style="font-weight: 500;">每日预约规则</div>
+                        <div class="text-small" style="line-height: 1.6;">
+                            · 每人每天最多预约 2 个时段<br>
+                            · 每次预约最长 3 小时<br>
+                            · 开始使用前 15 分钟内需签到<br>
+                            · 超过 15 分钟未签到将自动取消预约
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 32px;"></div>
+    </div>
 </div>
