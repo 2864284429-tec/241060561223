@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>统计 - 图书馆座位预约系统</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- 侧边栏 -->
+  <nav class="admin-sidebar">
+    <div class="admin-sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      <span class="admin-sidebar-logo-text">座位预约管理</span>
+    </div>
+    <div class="admin-sidebar-nav">
+      <a href="admin-booking.html" class="admin-sidebar-item">
+        <span class="admin-sidebar-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </span>
+        预约管理
+      </a>
+      <a href="admin-seat.html" class="admin-sidebar-item">
+        <span class="admin-sidebar-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </span>
+        座位管理
+      </a>
+      <a href="admin-stats.html" class="admin-sidebar-item active">
+        <span class="admin-sidebar-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+        </span>
+        统计
+      </a>
+    </div>
+  </nav>
+
+  <!-- 移动端导航 -->
+  <nav class="admin-mobile-nav">
+    <span class="admin-mobile-nav-title">座位预约管理</span>
+    <button class="admin-mobile-nav-toggle" type="button">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main class="admin-content">
+
+    <!-- 页面标题 -->
+    <div class="mb-xl">
+      <h1 class="text-h1">数据统计</h1>
+      <p class="text-small" style="margin-top: 4px;">查看图书馆座位使用数据概览</p>
+    </div>
+
+    <!-- 统计卡片 -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;" class="mb-xl">
+      <div class="stat-card">
+        <div class="stat-card-value">156</div>
+        <div class="stat-card-label">总座位数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-value" style="color: var(--success);">89</div>
+        <div class="stat-card-label">今日已预约</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-value" style="color: var(--warning);">42</div>
+        <div class="stat-card-label">当前使用中</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-value" style="color: var(--error);">18</div>
+        <div class="stat-card-label">今日已取消</div>
+      </div>
+    </div>
+
+    <!-- 本周预约趋势 -->
+    <div class="card-custom mb-xl">
+      <div class="section-title">本周预约趋势</div>
+      <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 16px;">
+        <div style="text-align: center;">
+          <div style="background: var(--primary-light); border-radius: 4px; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;">
+            <div style="background: var(--primary); width: 60%; border-radius: 4px 4px 0 0; height: 72%;"></div>
+          </div>
+          <div class="text-caption" style="margin-top: 6px;">周一</div>
+          <div class="text-small" style="font-weight: 600;">72</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="background: var(--primary-light); border-radius: 4px; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;">
+            <div style="background: var(--primary); width: 60%; border-radius: 4px 4px 0 0; height: 88%;"></div>
+          </div>
+          <div class="text-caption" style="margin-top: 6px;">周二</div>
+          <div class="text-small" style="font-weight: 600;">88</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="background: var(--primary-light); border-radius: 4px; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;">
+            <div style="background: var(--primary); width: 60%; border-radius: 4px 4px 0 0; height: 96%;"></div>
+          </div>
+          <div class="text-caption" style="margin-top: 6px;">周三</div>
+          <div class="text-small" style="font-weight: 600;">96</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="background: var(--primary-light); border-radius: 4px; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;">
+            <div style="background: var(--primary); width: 60%; border-radius: 4px 4px 0 0; height: 64%;"></div>
+          </div>
+          <div class="text-caption" style="margin-top: 6px;">周四</div>
+          <div class="text-small" style="font-weight: 600;">64</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="background: var(--primary-light); border-radius: 4px; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;">
+            <div style="background: var(--primary); width: 60%; border-radius: 4px 4px 0 0; height: 80%;"></div>
+          </div>
+          <div class="text-caption" style="margin-top: 6px;">周五</div>
+          <div class="text-small" style="font-weight: 600;">80</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="background: var(--primary-light); border-radius: 4px; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;">
+            <div style="background: var(--primary); width: 60%; border-radius: 4px 4px 0 0; height: 48%;"></div>
+          </div>
+          <div class="text-caption" style="margin-top: 6px;">周六</div>
+          <div class="text-small" style="font-weight: 600;">48</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="background: var(--primary-light); border-radius: 4px; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;">
+            <div style="background: var(--primary); width: 60%; border-radius: 4px 4px 0 0; height: 36%;"></div>
+          </div>
+          <div class="text-caption" style="margin-top: 6px;">周日</div>
+          <div class="text-small" style="font-weight: 600;">36</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 各区域使用率 -->
+    <div class="card-custom mb-xl">
+      <div class="section-title">各区域座位使用率</div>
+      <div style="margin-top: 16px;">
+        <div style="margin-bottom: 20px;">
+          <div class="d-flex justify-content-between mb-sm">
+            <span class="text-body">A区（一楼）- 自习区</span>
+            <span class="text-small" style="font-weight: 600; color: var(--primary);">78%</span>
+          </div>
+          <div class="progress-custom">
+            <div class="progress-bar-custom" style="width: 78%;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <div class="d-flex justify-content-between mb-sm">
+            <span class="text-body">B区（二楼）- 阅览区</span>
+            <span class="text-small" style="font-weight: 600; color: var(--primary);">65%</span>
+          </div>
+          <div class="progress-custom">
+            <div class="progress-bar-custom" style="width: 65%;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <div class="d-flex justify-content-between mb-sm">
+            <span class="text-body">C区（三楼）- 研讨区</span>
+            <span class="text-small" style="font-weight: 600; color: var(--primary);">42%</span>
+          </div>
+          <div class="progress-custom">
+            <div class="progress-bar-custom" style="width: 42%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 热门时段表格 -->
+    <div class="card-custom">
+      <div class="section-title">今日各时段预约分布</div>
+      <div style="overflow-x: auto; margin-top: 16px;">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>时段</th>
+              <th>已预约</th>
+              <th>使用率</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>08:00 - 10:00</td>
+              <td>45 / 60</td>
+              <td>
+                <div class="d-flex align-items-center gap-sm">
+                  <div class="progress-custom" style="width: 100px;">
+                    <div class="progress-bar-custom" style="width: 75%;"></div>
+                  </div>
+                  <span class="text-small">75%</span>
+                </div>
+              </td>
+              <td><span class="badge-status badge-booked">热门</span></td>
+            </tr>
+            <tr>
+              <td>10:00 - 12:00</td>
+              <td>52 / 60</td>
+              <td>
+                <div class="d-flex align-items-center gap-sm">
+                  <div class="progress-custom" style="width: 100px;">
+                    <div class="progress-bar-custom" style="width: 87%; background-color: var(--warning);"></div>
+                  </div>
+                  <span class="text-small">87%</span>
+                </div>
+              </td>
+              <td><span class="badge-status badge-expired">拥挤</span></td>
+            </tr>
+            <tr>
+              <td>14:00 - 16:00</td>
+              <td>38 / 60</td>
+              <td>
+                <div class="d-flex align-items-center gap-sm">
+                  <div class="progress-custom" style="width: 100px;">
+                    <div class="progress-bar-custom" style="width: 63%;"></div>
+                  </div>
+                  <span class="text-small">63%</span>
+                </div>
+              </td>
+              <td><span class="badge-status badge-available">适中</span></td>
+            </tr>
+            <tr>
+              <td>16:00 - 18:00</td>
+              <td>28 / 60</td>
+              <td>
+                <div class="d-flex align-items-center gap-sm">
+                  <div class="progress-custom" style="width: 100px;">
+                    <div class="progress-bar-custom" style="width: 47%;"></div>
+                  </div>
+                  <span class="text-small">47%</span>
+                </div>
+              </td>
+              <td><span class="badge-status badge-available">适中</span></td>
+            </tr>
+            <tr>
+              <td>19:00 - 21:00</td>
+              <td>19 / 60</td>
+              <td>
+                <div class="d-flex align-items-center gap-sm">
+                  <div class="progress-custom" style="width: 100px;">
+                    <div class="progress-bar-custom" style="width: 32%;"></div>
+                  </div>
+                  <span class="text-small">32%</span>
+                </div>
+              </td>
+              <td><span class="badge-status badge-available">空闲</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

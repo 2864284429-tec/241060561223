@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预约确认</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="user-navbar">
+    <a href="seat-detail.html" class="user-navbar-back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </a>
+    <div class="user-navbar-title">预约确认</div>
+    <div class="user-navbar-placeholder"></div>
+  </nav>
+
+  <div class="user-page">
+    <div class="user-page-content">
+
+      <div class="section-block">
+        <div class="error-state" style="padding: 32px 16px;">
+          <div class="error-state-icon">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <div class="text-h2" style="color: var(--error); margin-bottom: 8px;">预约失败</div>
+          <div class="error-state-text" style="margin-bottom: 0; line-height: 1.6;">
+            您选择的 08:00 - 09:00 时段已被其他用户预约，<br>
+            请返回选择其他可用时段
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">预约信息</div>
+        <div class="card-custom">
+          <div class="d-flex justify-content-between align-items-center mb-md">
+            <span class="text-small" style="color: var(--gray);">座位编号</span>
+            <span class="text-body" style="font-weight: 500;">A-01</span>
+          </div>
+          <div class="divider" style="margin: 12px 0;"></div>
+          <div class="d-flex justify-content-between align-items-center mb-md">
+            <span class="text-small" style="color: var(--gray);">位置</span>
+            <span class="text-body" style="font-weight: 500;">1楼 · 自习区A · 靠窗</span>
+          </div>
+          <div class="divider" style="margin: 12px 0;"></div>
+          <div class="d-flex justify-content-between align-items-center mb-md">
+            <span class="text-small" style="color: var(--gray);">预约日期</span>
+            <span class="text-body" style="font-weight: 500;">2026年7月14日</span>
+          </div>
+          <div class="divider" style="margin: 12px 0;"></div>
+          <div class="d-flex justify-content-between align-items-center mb-md">
+            <span class="text-small" style="color: var(--gray);">预约时段</span>
+            <span class="text-body" style="font-weight: 500;">08:00 - 11:00</span>
+          </div>
+          <div class="divider" style="margin: 12px 0;"></div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="text-small" style="color: var(--gray);">状态</span>
+            <span class="badge-status badge-cancelled">时段冲突</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">冲突时段详情</div>
+        <div class="card-custom" style="border-color: var(--error); background-color: var(--error-light);">
+          <div class="d-flex gap-md">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <div>
+              <div class="text-body mb-sm" style="font-weight: 500; color: var(--error);">时段已被占用</div>
+              <div class="text-small" style="line-height: 1.8; color: var(--error);">
+                <div>08:00 - 09:00 <span class="badge-status badge-booked" style="font-size: 10px; padding: 2px 8px; margin-left: 4px;">已被预约</span></div>
+                <div>09:00 - 10:00 <span class="badge-status badge-available" style="font-size: 10px; padding: 2px 8px; margin-left: 4px;">可预约</span></div>
+                <div>10:00 - 11:00 <span class="badge-status badge-available" style="font-size: 10px; padding: 2px 8px; margin-left: 4px;">可预约</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">系统推荐</div>
+        <div class="card-custom card-custom-clickable mb-md">
+          <div class="d-flex justify-content-between align-items-center mb-sm">
+            <div>
+              <div class="text-h3">A-04</div>
+              <div class="text-small mt-1">中间位置 · 有电源</div>
+            </div>
+            <span class="badge-status badge-available">可预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="text-small" style="color: var(--primary);">09:00 - 12:00 · 3小时可用</div>
+        </div>
+        <div class="card-custom card-custom-clickable">
+          <div class="d-flex justify-content-between align-items-center mb-sm">
+            <div>
+              <div class="text-h3">A-05</div>
+              <div class="text-small mt-1">过道位置 · 无电源</div>
+            </div>
+            <span class="badge-status badge-available">可预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="text-small" style="color: var(--primary);">08:00 - 11:00 · 3小时可用</div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <a href="seat-detail.html" class="btn-custom btn-custom-primary btn-full-width">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+          返回重新选择时段
+        </a>
+        <a href="my-bookings.html" class="btn-custom btn-custom-secondary btn-full-width mt-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path>
+            <rect x="9" y="3" width="6" height="4" rx="1"></rect>
+            <path d="M9 14l2 2 4-4"></path>
+          </svg>
+          查看我的预约
+        </a>
+      </div>
+
+      <div style="height: 32px;"></div>
+    </div>
+  </div>
+</body>
+</html>

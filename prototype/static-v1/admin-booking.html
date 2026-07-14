@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预约管理 - 图书馆座位预约系统</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- 侧边栏 -->
+  <nav class="admin-sidebar">
+    <div class="admin-sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      <span class="admin-sidebar-logo-text">座位预约管理</span>
+    </div>
+    <div class="admin-sidebar-nav">
+      <a href="admin-booking.html" class="admin-sidebar-item active">
+        <span class="admin-sidebar-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </span>
+        预约管理
+      </a>
+      <a href="admin-seat.html" class="admin-sidebar-item">
+        <span class="admin-sidebar-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </span>
+        座位管理
+      </a>
+      <a href="admin-stats.html" class="admin-sidebar-item">
+        <span class="admin-sidebar-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+        </span>
+        统计
+      </a>
+    </div>
+  </nav>
+
+  <!-- 移动端导航 -->
+  <nav class="admin-mobile-nav">
+    <span class="admin-mobile-nav-title">座位预约管理</span>
+    <button class="admin-mobile-nav-toggle" type="button">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main class="admin-content">
+
+    <!-- 页面标题 -->
+    <div class="mb-xl">
+      <h1 class="text-h1">预约管理</h1>
+      <p class="text-small" style="margin-top: 4px;">查看和管理所有座位预约记录</p>
+    </div>
+
+    <!-- 筛选栏 -->
+    <div class="card-custom mb-xl">
+      <div class="d-flex flex-wrap gap-md" style="align-items: flex-end;">
+        <div style="flex: 1; min-width: 160px;">
+          <label class="text-small mb-xs d-block" style="font-weight: 500; color: var(--dark-gray);">预约状态</label>
+          <select class="input-custom">
+            <option value="">全部状态</option>
+            <option value="booked">已预约</option>
+            <option value="cancelled">已取消</option>
+            <option value="expired">已过期</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 160px;">
+          <label class="text-small mb-xs d-block" style="font-weight: 500; color: var(--dark-gray);">日期筛选</label>
+          <input type="date" class="input-custom" value="2026-07-14">
+        </div>
+        <div style="flex: 1; min-width: 160px;">
+          <label class="text-small mb-xs d-block" style="font-weight: 500; color: var(--dark-gray);">搜索学号/姓名</label>
+          <input type="text" class="input-custom" placeholder="输入学号或姓名搜索">
+        </div>
+        <button class="btn-custom btn-custom-secondary" style="height: 40px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+            <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+          </svg>
+          重置
+        </button>
+      </div>
+    </div>
+
+    <!-- 预约表格 - 成功状态 -->
+    <div class="card-custom">
+      <div class="d-flex justify-content-between align-items-center mb-lg">
+        <span class="text-h3">预约记录</span>
+        <span class="text-small">共 12 条记录</span>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>预约编号</th>
+              <th>学号</th>
+              <th>姓名</th>
+              <th>座位</th>
+              <th>日期</th>
+              <th>时段</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714001</span></td>
+              <td>2024010101</td>
+              <td>张伟</td>
+              <td>A区-1楼-012号</td>
+              <td>2026-07-14</td>
+              <td>08:00 - 10:00</td>
+              <td><span class="badge-status badge-booked">已预约</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714002</span></td>
+              <td>2024010205</td>
+              <td>李娜</td>
+              <td>B区-2楼-008号</td>
+              <td>2026-07-14</td>
+              <td>10:00 - 12:00</td>
+              <td><span class="badge-status badge-booked">已预约</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714003</span></td>
+              <td>2023050312</td>
+              <td>王强</td>
+              <td>A区-3楼-021号</td>
+              <td>2026-07-14</td>
+              <td>14:00 - 16:00</td>
+              <td><span class="badge-status badge-cancelled">已取消</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260713004</span></td>
+              <td>2024020108</td>
+              <td>赵敏</td>
+              <td>C区-1楼-005号</td>
+              <td>2026-07-13</td>
+              <td>08:00 - 10:00</td>
+              <td><span class="badge-status badge-expired">已过期</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714005</span></td>
+              <td>2024030215</td>
+              <td>陈晨</td>
+              <td>B区-1楼-017号</td>
+              <td>2026-07-14</td>
+              <td>16:00 - 18:00</td>
+              <td><span class="badge-status badge-booked">已预约</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714006</span></td>
+              <td>2023060422</td>
+              <td>刘洋</td>
+              <td>A区-2楼-009号</td>
+              <td>2026-07-14</td>
+              <td>10:00 - 12:00</td>
+              <td><span class="badge-status badge-cancelled">已取消</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714007</span></td>
+              <td>2024010503</td>
+              <td>周杰</td>
+              <td>C区-3楼-014号</td>
+              <td>2026-07-14</td>
+              <td>14:00 - 16:00</td>
+              <td><span class="badge-status badge-booked">已预约</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260713008</span></td>
+              <td>2024020311</td>
+              <td>孙丽</td>
+              <td>B区-2楼-003号</td>
+              <td>2026-07-13</td>
+              <td>16:00 - 18:00</td>
+              <td><span class="badge-status badge-expired">已过期</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714009</span></td>
+              <td>2023040518</td>
+              <td>吴磊</td>
+              <td>A区-1楼-025号</td>
+              <td>2026-07-14</td>
+              <td>08:00 - 10:00</td>
+              <td><span class="badge-status badge-booked">已预约</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714010</span></td>
+              <td>2024030107</td>
+              <td>郑华</td>
+              <td>C区-2楼-011号</td>
+              <td>2026-07-14</td>
+              <td>19:00 - 21:00</td>
+              <td><span class="badge-status badge-booked">已预约</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260713011</span></td>
+              <td>2024010219</td>
+              <td>黄芳</td>
+              <td>B区-3楼-006号</td>
+              <td>2026-07-13</td>
+              <td>10:00 - 12:00</td>
+              <td><span class="badge-status badge-cancelled">已取消</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-body" style="font-family: monospace;">BK20260714012</span></td>
+              <td>2024020420</td>
+              <td>何明</td>
+              <td>A区-2楼-018号</td>
+              <td>2026-07-14</td>
+              <td>19:00 - 21:00</td>
+              <td><span class="badge-status badge-booked">已预约</span></td>
+              <td>
+                <button class="btn-custom btn-custom-text" style="height: 32px; padding: 0 8px; font-size: 12px;">详情</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 分页 -->
+      <div class="d-flex justify-content-between align-items-center mt-lg" style="padding-top: 16px; border-top: 1px solid var(--light-gray);">
+        <span class="text-small">显示 1-12 共 12 条</span>
+        <div class="d-flex gap-sm">
+          <button class="btn-custom btn-custom-secondary" style="height: 32px; padding: 0 12px; font-size: 12px; cursor: not-allowed; opacity: 0.5;">上一页</button>
+          <button class="btn-custom btn-custom-primary" style="height: 32px; padding: 0 12px; font-size: 12px;">1</button>
+          <button class="btn-custom btn-custom-secondary" style="height: 32px; padding: 0 12px; font-size: 12px; cursor: not-allowed; opacity: 0.5;">下一页</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

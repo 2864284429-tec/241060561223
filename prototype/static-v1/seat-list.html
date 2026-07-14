@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>座位列表 - 1楼 自习区A</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="user-navbar">
+    <a href="user-index.html" class="user-navbar-back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </a>
+    <div class="user-navbar-title">1楼 · 自习区A</div>
+    <div class="user-navbar-placeholder"></div>
+  </nav>
+
+  <div class="user-page">
+    <div class="user-page-content">
+
+      <div class="section-block">
+        <div class="alert-custom alert-success">
+          <div class="d-flex align-items-center gap-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>今日还有 12 个座位可预约</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">选择预约日期</div>
+        <div class="d-flex gap-sm overflow-auto pb-2">
+          <div class="card-custom text-center flex-shrink-0" style="min-width: 64px; padding: 12px; border-color: var(--primary); background: var(--primary-light);">
+            <div class="text-small" style="color: var(--primary); font-weight: 500;">今天</div>
+            <div class="text-h3" style="color: var(--primary);">14</div>
+          </div>
+          <div class="card-custom text-center flex-shrink-0" style="min-width: 64px; padding: 12px;">
+            <div class="text-small">明天</div>
+            <div class="text-h3">15</div>
+          </div>
+          <div class="card-custom text-center flex-shrink-0" style="min-width: 64px; padding: 12px;">
+            <div class="text-small">后天</div>
+            <div class="text-h3">16</div>
+          </div>
+          <div class="card-custom text-center flex-shrink-0" style="min-width: 64px; padding: 12px;">
+            <div class="text-small">周五</div>
+            <div class="text-h3">17</div>
+          </div>
+          <div class="card-custom text-center flex-shrink-0" style="min-width: 64px; padding: 12px;">
+            <div class="text-small">周六</div>
+            <div class="text-h3">18</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">座位列表</div>
+
+        <div class="card-custom card-custom-clickable mb-md" onclick="location.href='seat-detail.html'">
+          <div class="d-flex justify-content-between align-items-start mb-sm">
+            <div>
+              <div class="text-h3">A-01</div>
+              <div class="text-small mt-1">靠窗位置 · 有电源</div>
+            </div>
+            <span class="badge-status badge-available">可预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="d-flex justify-content-between text-small">
+            <div class="d-flex align-items-center gap-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>08:00 - 21:00 可选</span>
+            </div>
+            <span style="color: var(--primary);">查看详情 →</span>
+          </div>
+        </div>
+
+        <div class="card-custom card-custom-clickable mb-md" onclick="location.href='seat-detail.html'">
+          <div class="d-flex justify-content-between align-items-start mb-sm">
+            <div>
+              <div class="text-h3">A-02</div>
+              <div class="text-small mt-1">靠窗位置 · 无电源</div>
+            </div>
+            <span class="badge-status badge-available">可预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="d-flex justify-content-between text-small">
+            <div class="d-flex align-items-center gap-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>08:00 - 21:00 可选</span>
+            </div>
+            <span style="color: var(--primary);">查看详情 →</span>
+          </div>
+        </div>
+
+        <div class="card-custom card-custom-clickable mb-md" style="opacity: 0.65;">
+          <div class="d-flex justify-content-between align-items-start mb-sm">
+            <div>
+              <div class="text-h3">A-03</div>
+              <div class="text-small mt-1">中间位置 · 有电源</div>
+            </div>
+            <span class="badge-status badge-booked">已预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="d-flex justify-content-between text-small">
+            <div class="d-flex align-items-center gap-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>今日全部时段已满</span>
+            </div>
+            <span class="text-small" style="color: var(--gray);">暂不可选</span>
+          </div>
+        </div>
+
+        <div class="card-custom card-custom-clickable mb-md" onclick="location.href='seat-detail.html'">
+          <div class="d-flex justify-content-between align-items-start mb-sm">
+            <div>
+              <div class="text-h3">A-04</div>
+              <div class="text-small mt-1">中间位置 · 有电源</div>
+            </div>
+            <span class="badge-status badge-available">可预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="d-flex justify-content-between text-small">
+            <div class="d-flex align-items-center gap-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>09:00 - 21:00 可选</span>
+            </div>
+            <span style="color: var(--primary);">查看详情 →</span>
+          </div>
+        </div>
+
+        <div class="card-custom card-custom-clickable mb-md" onclick="location.href='seat-detail.html'">
+          <div class="d-flex justify-content-between align-items-start mb-sm">
+            <div>
+              <div class="text-h3">A-05</div>
+              <div class="text-small mt-1">过道位置 · 无电源</div>
+            </div>
+            <span class="badge-status badge-available">可预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="d-flex justify-content-between text-small">
+            <div class="d-flex align-items-center gap-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>08:00 - 20:00 可选</span>
+            </div>
+            <span style="color: var(--primary);">查看详情 →</span>
+          </div>
+        </div>
+
+        <div class="card-custom card-custom-clickable mb-md" style="opacity: 0.65;">
+          <div class="d-flex justify-content-between align-items-start mb-sm">
+            <div>
+              <div class="text-h3">A-06</div>
+              <div class="text-small mt-1">靠墙位置 · 有电源</div>
+            </div>
+            <span class="badge-status badge-booked">已预约</span>
+          </div>
+          <div class="divider"></div>
+          <div class="d-flex justify-content-between text-small">
+            <div class="d-flex align-items-center gap-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>10:00 - 14:00 已被预约</span>
+            </div>
+            <span class="text-small" style="color: var(--gray);">暂不可选</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-sm mb-xl">
+        <span class="badge-status badge-available">可预约</span>
+        <span class="badge-status badge-booked">已预约</span>
+      </div>
+
+      <div style="height: 32px;"></div>
+    </div>
+  </div>
+</body>
+</html>
