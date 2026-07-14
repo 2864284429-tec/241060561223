@@ -30,13 +30,15 @@
 
 ```
 LibrarySeatReservation/
-├── docs/                              # 项目文档（12 份）
+├── docs/                              # 项目文档（14 份）
 ├── prototype/static-v1/              # 静态原型（9 个 HTML 页面）
-├── src/LibrarySeatReservation.Web/   # 主项目（Sprint 0 已创建）
+├── src/LibrarySeatReservation.Web/   # 主项目
 │   ├── Controllers/                   # 控制器层
 │   │   ├── HomeController.cs          ✅ Sprint 1
 │   │   ├── SeatController.cs          ✅ Sprint 1
 │   │   └── Admin/
+│   │       ├── AdminAuthController.cs     ✅ Sprint 3
+│   │       └── AdminHomeController.cs     ✅ Sprint 3
 │   ├── Services/                      # 业务逻辑层 ✅
 │   │   ├── ISeatService.cs
 │   │   ├── SeatService.cs
@@ -57,11 +59,17 @@ LibrarySeatReservation/
 │   │       ├── ReservationCreateViewModel.cs
 │   │       ├── MyBookingsViewModel.cs
 │   │       └── Admin/
+│   │           ├── AdminReservationListViewModel.cs
+│   │           └── AdminSeatListViewModel.cs
 │   ├── Views/                         # Razor 视图
 │   │   ├── Home/Index.cshtml          ✅ Sprint 1
 │   │   ├── Seat/List.cshtml           ✅ Sprint 1
 │   │   ├── Seat/Detail.cshtml         ✅ Sprint 1
-│   │   └── Shared/_Layout.cshtml      ✅ Sprint 1
+│   │   ├── Admin/Login.cshtml         ✅ Sprint 3
+│   │   ├── Admin/ReservationList.cshtml ✅ Sprint 3
+│   │   └── Shared/
+│   │       ├── _Layout.cshtml         ✅ Sprint 1
+│   │       └── _AdminLayout.cshtml    ✅ Sprint 3
 │   ├── Migrations/                    # EF Core 迁移 ✅
 │   ├── wwwroot/                       # 静态资源
 │   │   └── css/custom.css             ✅ Sprint 1
@@ -139,10 +147,11 @@ dotnet run --project src/LibrarySeatReservation.Web
 | 阶段 | 已完成内容 | 状态 |
 |------|------------|------|
 | 文档阶段 | 项目立项、需求分析、PRD、页面树、UI 规范、原型、系统设计、数据库设计、关键链路设计、一致性审计 | ✅ |
-| Sprint 0 | 项目骨架（sln + csproj）、Entity 实体类、DbContext + 种子数据、Service 接口与实现、EF Core 迁移、Program.cs 配置 | ✅ |
+| Sprint 0 | 项目骨架（sln + csproj）、Entity 实体类、DbContext + 种子数据、Service 接口与实现（含 SeatService CRUD + ReservationService）、EF Core 迁移、Program.cs 配置 | ✅ |
 | Sprint 1 | 用户首页、座位列表、座位详情（Controller + Razor 视图 + 自定义样式） | ✅ |
 | Sprint 2 | 预约提交、我的预约、取消预约 | ⏳ 待开发 |
-| Sprint 3 | 管理员登录、预约管理、座位管理 | ⏳ 待开发 |
+| Sprint 3（第 1 轮） | 管理员登录（GET/POST）、Session 权限守卫、预约管理页（最小可用版）、管理端布局（侧边栏） | 🔨 进行中 |
+| Sprint 3（剩余） | 座位管理（SeatList + CRUD）、预约管理筛选/删除 | ⏳ 待开发 |
 | Sprint 4 | 统计页、联调测试 | ⏳ 待开发 |
 
 ---
@@ -161,9 +170,24 @@ dotnet run --project src/LibrarySeatReservation.Web
 - [开发准备与 Sprint 0](docs/10-开发准备与Sprint0.md)
 - [开发前一致性总审计](docs/11-开发前一致性总审计.md)
 - [开发起步与骨架记录](docs/12-开发起步与骨架记录.md)
+- [用户端主链路开发记录](docs/13-用户端主链路开发记录.md)
+- [管理端与权限开发记录](docs/14-管理端与权限开发记录.md)
 
 ---
 
 ## 许可证
 
 本项目仅用于课程实践，不涉及商业用途。
+
+---
+
+## 当前已知限制
+
+| 限制 | 说明 | 计划处理 |
+|------|------|----------|
+| 管理员登录无验证码 | 硬编码账号密码，无防暴力破解 | 课堂项目不实现 |
+| 预约管理无筛选/删除 | 仅显示全部记录 | Sprint 3 第 2 轮 |
+| 座位管理未实现 | 无法新增/编辑/删除座位 | Sprint 3 第 2 轮 |
+| 统计页未实现 | 无预约统计数据 | Sprint 4 |
+| 用户端无 Session | 首页未显示当前用户名 | Sprint 2 |
+| 预约提交/取消未实现 | 用户端闭环未完成 | Sprint 2 |

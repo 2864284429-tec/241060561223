@@ -1,0 +1,87 @@
+@model LibrarySeatReservation.Web.Models.ViewModels.Admin.AdminReservationListViewModel
+@{
+    ViewData["Title"] = "预约管理";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- 页面标题 -->
+<div class="mb-xl">
+    <h1 class="text-h1">预约管理</h1>
+    <p class="text-small" style="margin-top: 4px;">查看和管理所有座位预约记录</p>
+</div>
+
+<!-- 预约表格 -->
+<div class="card-custom">
+    <div class="d-flex justify-content-between align-items-center mb-lg">
+        <span class="text-h3">预约记录</span>
+        <span class="text-small">共 @Model.Bookings.Count 条记录</span>
+    </div>
+
+    @if (Model.Bookings.Any())
+    {
+        <div style="overflow-x: auto;">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>预约编号</th>
+                        <th>用户</th>
+                        <th>座位</th>
+                        <th>日期</th>
+                        <th>时段</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model.Bookings)
+                    {
+                        var displayStatus = booking.Status;
+                        if (booking.Status == "已预约")
+                        {
+                            var endTime = booking.Date.AddHours(booking.TimeSlot + 1);
+                            if (DateTime.Now >= endTime)
+                            {
+                                displayStatus = "已过时";
+                            }
+                        }
+
+                        <tr>
+                            <td><span class="text-body" style="font-family: monospace;">@booking.ReservationId</span></td>
+                            <td>@booking.UserName</td>
+                            <td>@booking.SeatName</td>
+                            <td>@booking.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@booking.TimeSlot:00 - @(booking.TimeSlot + 1):00</td>
+                            <td>
+                                @if (displayStatus == "已预约")
+                                {
+                                    <span class="badge-status badge-booked">已预约</span>
+                                }
+                                else if (displayStatus == "已取消")
+                                {
+                                    <span class="badge-status badge-cancelled">已取消</span>
+                                }
+                                else if (displayStatus == "已过时")
+                                {
+                                    <span class="badge-status badge-expired">已过时</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+            </div>
+            <div class="empty-state-text">暂无预约记录</div>
+        </div>
+    }
+</div>
